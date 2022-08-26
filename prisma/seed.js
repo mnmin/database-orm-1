@@ -39,9 +39,12 @@ async function seed() {
 
     const createdScreening = await prisma.screening.create({
         data: {
-            startsAt: new Date('December 17, 1995 03:24:00')
+            startsAt: new Date('December 17, 1995 03:24:00'),
+            movieId: createdMovie.id
+
         }
-    })
+    });
+    console.log("Screening created", createdScreening)
 
     // Don't edit any of the code below this line
     process.exit(0);
