@@ -37,14 +37,31 @@ async function seed() {
     });
     console.log("Movie created", createdMovie)
 
+    //the database runs the command and checks for the screen id. This code needs to be in order
+    const createdScreen = await prisma.screen.create({
+        data: {
+            number: 5
+        }
+    });
+    console.log("Created Screen", createdScreen)
+
     const createdScreening = await prisma.screening.create({
         data: {
             startsAt: new Date('December 17, 1995 03:24:00'),
-            movieId: createdMovie.id
-
+            movieId: createdMovie.id,
+            screenId: createdScreen.id
+        },
+        include: {
+            movie: true,
+            screen: true
         }
     });
-    console.log("Screening created", createdScreening)
+    // console.log( 'Result: ', JSON.stringify( result, null, 2 )); lets you stringify the result
+    // used to view the data in a table
+    // below command used: check difference without JSON "npx prisma migrate reset"
+    console.log("Screening created", JSON.stringify( createdScreening, null, 2 ))
+
+    
 
     // Don't edit any of the code below this line
     process.exit(0);
